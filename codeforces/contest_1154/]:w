@@ -1,0 +1,45 @@
+#include<bits/stdc++.h>
+const int N = 10000100;
+std::bitset<N> v;
+
+int num[2002000], pos[10001000];
+
+int main() 
+{
+    int n;
+    while(std::cin >> n) {
+        memset(pos, 0, sizeof(pos));
+        auto ans = std::make_pair(1e8+10, std::make_pair(-1,-1));
+        int mx = -1;
+        for(int i = 1; i <= n; i++) {
+            std::cin >> num[i];
+            mx = std::max(mx, num[i]);
+            if(pos[num[i]] != 0) {
+                if(ans.first > num[i]) {
+                    ans = std::make_pair(num[i], std::make_pair(pos[num[i]], i));
+                }
+            }
+            pos[num[i]] = i;
+        }
+
+        for(int i = 1; i < mx; i++) {
+            int x = 0, y = 0, cur = 0;
+            for(int j = i; j < mx && y == 0; j += i) {
+                if(pos[j] == 0) {
+                    continue;
+                }
+                y = pos[j];
+                cur =j;
+                if(x == 0) {
+                    std::swap(x, y);
+                }
+                
+            if(x > 0 && y > 0 && ans.first > cur) {
+                ans = std::make_pair(cur, std::make_pair(x, y));
+            }
+            }
+        }
+        std::cout << ans.second.first << " " << ans.second.second << std::endl;
+    }
+    return 0;
+}
