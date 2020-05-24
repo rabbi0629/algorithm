@@ -20,6 +20,8 @@ int main()
 			}
 		}
 
+		std::cout << std::endl;
+
 		if(n%2) {
 			right[n] = M-num[n];
 		}
